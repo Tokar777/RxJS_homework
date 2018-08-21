@@ -11,23 +11,18 @@
 <script src="https://unpkg.com/rxjs@6.2.2/bundles/rxjs.umd.min.js"></script>
 
 <script type="module">
-    const {interval,} = rxjs;
-    const {skip, take, finalize} = rxjs.operators;
+    const {interval} = rxjs;
+    const {skip, take} = rxjs.operators;
 
     //emit every 1,5s
     const source = interval(1500);
 
     //skip the first  emitted values
-    const example = source.pipe(skip(2));
-
-    //take 5 elements after skip2
-    const example2 = example.pipe(take(5));
-
-    //Call a function when observable completes or errors
-    const example3 = example2.pipe(finalize(() => console.log("done")));
-
-
-    const subscribe = example3.subscribe(val => console.log(val));
+    const example = source.pipe(
+        skip(2),
+        take(5)
+    );
+    const subscribe = example.subscribe(val => console.log(val),err=>console.log(`Oops... ${err}`),() => console.log(`Complete!`),);
 
 
 </script>
