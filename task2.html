@@ -10,30 +10,19 @@
 <body>
 <script src="https://unpkg.com/rxjs@6.2.2/bundles/rxjs.umd.min.js"></script>
 <script type="module">
-    const {timer, of} = rxjs;
-    const {mergeMap, take, map} = rxjs.operators;
+    const {throwError } = rxjs;
+
     /*    2. Необходимо написать Observable который генерит ошибку “3...2...1...ERROR!!!”.
         Subscriber должен отлавливать ошибку и выводить сообщение в консоль.*/
 
 
-    //emit 0 after 1 second then complete, since no second argument is supplied
-    const source = timer(1000, 1000);
 
-    const example = source.pipe(
+    const source = throwError('3...2...1...ERROR!!!');
 
-        mergeMap(val => {
-            //throw error for demonstration
-            if (val === 0 ) {
-                throw Error('3...2...1...ERROR!!!');
-            }
 
-            retry(1)
+    const subscribe = source.subscribe(val => console.log(`${val} ...`), (err)=>console.log(err), ()=>console.log('complete'));
 
-        }),
 
-    );
-
-    const subscribe = example.subscribe(val => console.log(`${val} ...`), (err)=>console.log(err.message), ()=>console.log('complete'));
 </script>
 
 </body>
