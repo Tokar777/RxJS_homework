@@ -19,26 +19,21 @@
     //emit 0 after 1 second then complete, since no second argument is supplied
     const source = timer(1000, 1000);
 
-    const start = 3;
-
     const example = source.pipe(
-
-        map((curr,index) => start - index),
 
         mergeMap(val => {
             //throw error for demonstration
-            if (val === 0) {
-                throw new Error('Oops the error came out!');
+            if (val === 0 ) {
+                throw Error('3...2...1...ERROR!!!');
             }
-            return of(val);
+
+            retry(1)
+
         }),
-        take(4),
 
     );
 
     const subscribe = example.subscribe(val => console.log(`${val} ...`), (err)=>console.log(err.message), ()=>console.log('complete'));
-
-
 </script>
 
 </body>
