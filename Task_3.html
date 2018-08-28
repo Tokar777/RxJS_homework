@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script src="https://unpkg.com/rxjs@6.2.2/bundles/rxjs.umd.min.js"></script>
+<script type="module">
+    const {throwError,of} = rxjs;
+    const {catchError} = rxjs.operators;
+
+    /*    3. Необходимо создать Observable который генерит ошибку “3...2...1...UPS!!!”.
+        Обработать эту ошибку и вернуть новый Observable который выведет в консоль “I handle error: 3...2...1...UPS!!!”*/
+
+
+
+    const source = throwError('3...2...1...UPS!!!');
+
+    const example = source.pipe(
+
+        catchError(err => of(`I handle error:  "${err}" `))
+
+
+    );
+
+
+    const subscribe = example.subscribe(val => console.log(`${val}`), (err) => console.log(err), () => console.log('complete'));
+
+
+</script>
+
+</body>
+</html>
